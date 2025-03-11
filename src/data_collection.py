@@ -24,17 +24,12 @@ if __name__ == "__main__":
     if not api_key:
         print(f"Error: API key not found")
     
-    ticker = input("Please enter ticker symbol: ").strip().upper()
-    multiplier = input("Please enter multipler value: ").strip()
-    timespan = input("Please enter timespan value: ").strip().lower()
-    from_date = input("Please enter starting time value: ").strip()
-    to_date = input("Please enter end time value: ").strip()
 
-    # ticker = input("Enter stock ticker (e.g., AAPL): ").strip().upper()
-    # multiplier = input("Enter multiplier (e.g., 1): ").strip()
-    # timespan = input("Enter timespan (e.g., day, hour, minute): ").strip().lower()
-    # from_date = input("Enter start date (YYYY-MM-DD): ").strip()
-    # to_date = input("Enter end date (YYYY-MM-DD): ").strip()
+    ticker = input("Enter stock ticker (e.g., AAPL): ").strip().upper()
+    multiplier = input("Enter multiplier (e.g., 1): ").strip()
+    timespan = input("Enter timespan (e.g., day, hour, minute): ").strip().lower()
+    from_date = input("Enter start date (YYYY-MM-DD): ").strip()
+    to_date = input("Enter end date (YYYY-MM-DD): ").strip()
 
     # ticker = 'AAPL'
     # multiplier = 1
