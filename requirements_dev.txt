@@ -1,0 +1,6 @@
+# List of dependencies
+
+pip==25.0.1
+
+
+
