@@ -31,12 +31,6 @@ if __name__ == "__main__":
     from_date = input("Enter start date (YYYY-MM-DD): ").strip()
     to_date = input("Enter end date (YYYY-MM-DD): ").strip()
 
-    # ticker = 'AAPL'
-    # multiplier = 1
-    # timespan = 'day'
-    # from_date = '2024-01-01'
-    # to_date = '2024-01-31'
-
     
     try:
         multiplier = int(multiplier)
