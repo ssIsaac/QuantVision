@@ -23,6 +23,6 @@ def pre_processData(df):
     y = df['c'] # Target variable (closing price)
 
     # Split data: training (80%), testings (20%)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.8, shuffle=False) #Ensures that data remains in chronological order (important for time-series forecasting)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=0.9, shuffle=False) #Ensures that data remains in chronological order (important for time-series forecasting)
 
     return X_train, X_test, y_train, y_test
