@@ -4,12 +4,13 @@ import pandas as pda
 import os 
 from dotenv import load_dotenv
 
-
-load_dotenv()
+env_path = os.path.join(os.path.dirname(__file__), "..","stock_env", ".env")
+load_dotenv(env_path)
 api_key = os.getenv("API_key")
 
+
 def fetch_stock_data(API_key, ticker, multipler, timespan, from_date, to_date):
-    string_query = f"https://api.polygon.io/v2/aggs/ticker/{ticker}/range/{multipler}/{timespan}/{from_date}/{to_date}?apiKey={API_key}"
+    string_query = f"https://api.polygon.io/v2/aggs/ticker/{ticker}/range/{multipler}/{timespan}/{from_date}/{to_date}?apiKey={api_key}"
 
     response = requests.get(string_query)
 
@@ -20,6 +21,8 @@ def fetch_stock_data(API_key, ticker, multipler, timespan, from_date, to_date):
     else:
         raise Exception(f"Error: {response.status_code} - {response.text}")
     
+
+
 # if __name__ == "__main__":
 #     if not api_key:
 #         print(f"Error: API key not found")
@@ -40,6 +43,9 @@ def fetch_stock_data(API_key, ticker, multipler, timespan, from_date, to_date):
 
 #     data = fetch_stock_data(api_key, ticker, multiplier, timespan, from_date, to_date)
 
-    # filename = f"data/{ticker}_{from_date}_to_{to_date}.csv"
-    # data.to_csv(filename, index=False)
-    # print(f"data saved to {filename}")
+#     if not os.path.exists("data"):
+#         os.makedirs("data")
+    
+#     filename = f"data/{ticker}_{from_date}_to_{to_date}.csv"
+#     data.to_csv(filename, index=False)
+#     print(f"data saved to {filename}")

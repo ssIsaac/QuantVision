@@ -11,7 +11,7 @@ def add_lag_features(df, column='c', lags=[1,2,3]):
     df.dropna(inplace=True)
     return df
 
-def pre_processData(dt):
+def pre_processData(df):
     """
     Preprocess stock data by converting timestamps and adding lag add_lag_features
     """
@@ -19,7 +19,7 @@ def pre_processData(dt):
     df = add_lag_features(df, column='c', lags=[1,2,3])
 
     features = ["c_Lag1", "c_Lag2", "c_Lag3"]
-    X = df(features) # create a new dataframe X with features
+    X = df[features] # create a new dataframe X with features
     y = df['c'] # Target variable (closing price)
 
     # Split data: training (80%), testings (20%)

@@ -4,13 +4,23 @@ import data_collection as dc
 import data_preprocessing as dp
 import models 
 import os 
+from dotenv import load_dotenv
 
-def main():
 
+env_path = os.path.join(os.path.dirname(__file__), "..","stock_env", ".env")
+load_dotenv(env_path)
+api_key = os.getenv("API_key")
+
+if __name__ == "__main__":
+
+    
+
+    print("running")
     if not api_key:
         print(f"Error: API key not found")
+        exit()
     else:
-        api_key = os.getenv("API_key")
+        print(f"api key obtained {api_key}")
     
 
     ticker = input("Enter stock ticker (e.g., AAPL): ").strip().upper()
@@ -29,9 +39,12 @@ def main():
 
     try:
         data = dc.fetch_stock_data(api_key, ticker, multiplier, timespan, from_date, to_date)
-        if not os.path.exists("data"):
-            os.makedirs("data")
-        filename = f"data/{ticker}_{from_date}_to_{to_date}.csv"
+        root_dir = os.path.join(os.path.dirname(__file__),"..")
+        data_dir = os.path.join(os.path.join(root_dir,"data"))
+
+        if not os.path.exists("data_dir"):
+            os.makedirs("data_dir")
+        filename = os.path.join(data_dir, f"{ticker}_{from_date}_to_{to_date}.csv")
         data.to_csv(filename, index=False)
         print(f"data saved to {filename}")
     except Exception as e:
@@ -50,7 +63,7 @@ def main():
 
     # Save prediction 
     data.loc[X_test.index, 'Predicted Close'] = predictions ## Only save predictions of rows of X that are assigned as test data 
-    filename = f"data/{ticker}_predictions.csv"
-    data[['t','c','Predicted_Close']].to_csv(filename, index=False)
+    filename = os.path.join(data_dir, f"{ticker}_{from_date}_to_{to_date}.csv")
+    data[['t','c','Predicted Close']].to_csv(filename, index=False)
 
     print(f"Predictions{filename} saved")
