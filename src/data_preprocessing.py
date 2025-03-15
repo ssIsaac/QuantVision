@@ -16,7 +16,7 @@ def pre_processData(dt):
     Preprocess stock data by converting timestamps and adding lag add_lag_features
     """
     df['t'] = pda.to_datetime(df['t'], unit='ms')
-    df = add_lag_features(df, column=c, lags=[1,2,3])
+    df = add_lag_features(df, column='c', lags=[1,2,3])
 
     features = ["c_Lag1", "c_Lag2", "c_Lag3"]
     X = df(features) # create a new dataframe X with features

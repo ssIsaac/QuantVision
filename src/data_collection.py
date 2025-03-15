@@ -20,26 +20,26 @@ def fetch_stock_data(API_key, ticker, multipler, timespan, from_date, to_date):
     else:
         raise Exception(f"Error: {response.status_code} - {response.text}")
     
-if __name__ == "__main__":
-    if not api_key:
-        print(f"Error: API key not found")
+# if __name__ == "__main__":
+#     if not api_key:
+#         print(f"Error: API key not found")
     
 
-    ticker = input("Enter stock ticker (e.g., AAPL): ").strip().upper()
-    multiplier = input("Enter multiplier (e.g., 1): ").strip()
-    timespan = input("Enter timespan (e.g., day, hour, minute): ").strip().lower()
-    from_date = input("Enter start date (YYYY-MM-DD): ").strip()
-    to_date = input("Enter end date (YYYY-MM-DD): ").strip()
+#     ticker = input("Enter stock ticker (e.g., AAPL): ").strip().upper()
+#     multiplier = input("Enter multiplier (e.g., 1): ").strip()
+#     timespan = input("Enter timespan (e.g., day, hour, minute): ").strip().lower()
+#     from_date = input("Enter start date (YYYY-MM-DD): ").strip()
+#     to_date = input("Enter end date (YYYY-MM-DD): ").strip()
 
     
-    try:
-        multiplier = int(multiplier)
-    except ValueError:
-        print("Error, multiplier must be an integer value")
-        exit()
+#     try:
+#         multiplier = int(multiplier)
+#     except ValueError:
+#         print("Error, multiplier must be an integer value")
+#         exit()
 
-    data = fetch_stock_data(api_key, ticker, multiplier, timespan, from_date, to_date)
+#     data = fetch_stock_data(api_key, ticker, multiplier, timespan, from_date, to_date)
 
-    filename = f"data/{ticker}_{from_date}_to_{to_date}.csv"
-    data.to_csv(filename, index=False)
-    print(f"data saved to {filename}")
+    # filename = f"data/{ticker}_{from_date}_to_{to_date}.csv"
+    # data.to_csv(filename, index=False)
+    # print(f"data saved to {filename}")
