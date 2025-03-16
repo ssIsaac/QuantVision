@@ -1,5 +1,7 @@
 # The main script to run the full pipeline
 """Main module."""
+import pandas as pda
+import numpy as np
 import data_collection as dc
 import data_preprocessing as dp
 import models 
@@ -74,6 +76,37 @@ if __name__ == "__main__":
     data[['t','c','Predicted Close']].to_csv(filename, index=False)
     print(f"Predictions{filename} saved")
 
+
+
+################################################################
+
+    ## Predict future prices
+    future_price, lag_values = dp.predict_future_price(model, data)
+
+    # Get the last date
+    last_date = data["t"].iloc[-1]
+
+    # Calculate next date
+    next_date = last_date + pda.Timedelta(days=1)
+    
+    # Append new row into df
+    new_row = pda.DataFrame({
+        "t": [next_date],
+        "c": [np.nan],
+        "Predicted Close": [future_price],
+        "c_Lag1": [lag_values["c_Lag1"]],
+        "c_Lag2": [lag_values["c_Lag2"]],
+        "c_Lag3": [lag_values["c_Lag3"]]
+    })
+    data = pda.concat([data, new_row], ignore_index=True)
+    print(data)
+
+###############
+
+
+
+    test_dates = data.loc[data.index.intersection(X_test.index),'t']
+    vi.plot_predictions(ticker,y_test, predictions, test_dates, future_date=next_date, future_price=future_price)
     # Display visualisation
     # print("Available columns:", data.columns)
-    vi.plot_predictions(ticker,y_test, predictions, data.loc[X_test.index, 't'])
+    
