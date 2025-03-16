@@ -5,6 +5,7 @@ import data_preprocessing as dp
 import models 
 import os 
 from dotenv import load_dotenv
+import visualisation as vi
 
 
 env_path = os.path.join(os.path.dirname(__file__), "..","stock_env", ".env")
@@ -23,11 +24,17 @@ if __name__ == "__main__":
         print(f"api key obtained {api_key}")
     
 
-    ticker = input("Enter stock ticker (e.g., AAPL): ").strip().upper()
-    multiplier = input("Enter multiplier (e.g., 1): ").strip()
-    timespan = input("Enter timespan (e.g., day, hour, minute): ").strip().lower()
-    from_date = input("Enter start date (YYYY-MM-DD): ").strip()
-    to_date = input("Enter end date (YYYY-MM-DD): ").strip()
+    # ticker = input("Enter stock ticker (e.g., AAPL): ").strip().upper()
+    # multiplier = input("Enter multiplier (e.g., 1): ").strip()
+    # timespan = input("Enter timespan (e.g., day, hour, minute): ").strip().lower()
+    # from_date = input("Enter start date (YYYY-MM-DD): ").strip()
+    # to_date = input("Enter end date (YYYY-MM-DD): ").strip()
+
+    ticker = "HIMS"
+    multiplier = "1"
+    timespan = "day"
+    from_date = "2025-01-01"
+    to_date = "2025-03-14"
 
 
     ## Fetch stock data
@@ -65,5 +72,8 @@ if __name__ == "__main__":
     data.loc[X_test.index, 'Predicted Close'] = predictions ## Only save predictions of rows of X that are assigned as test data 
     filename = os.path.join(data_dir, f"{ticker}_{from_date}_to_{to_date}.csv")
     data[['t','c','Predicted Close']].to_csv(filename, index=False)
-
     print(f"Predictions{filename} saved")
+
+    # Display visualisation
+    # print("Available columns:", data.columns)
+    vi.plot_predictions(ticker,y_test, predictions, data.loc[X_test.index, 't'])
