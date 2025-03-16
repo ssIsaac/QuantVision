@@ -26,17 +26,17 @@ if __name__ == "__main__":
         print(f"api key obtained {api_key}")
     
 
-    # ticker = input("Enter stock ticker (e.g., AAPL): ").strip().upper()
-    # multiplier = input("Enter multiplier (e.g., 1): ").strip()
-    # timespan = input("Enter timespan (e.g., day, hour, minute): ").strip().lower()
-    # from_date = input("Enter start date (YYYY-MM-DD): ").strip()
-    # to_date = input("Enter end date (YYYY-MM-DD): ").strip()
+    ticker = input("Enter stock ticker (e.g., AAPL): ").strip().upper()
+    multiplier = input("Enter multiplier (e.g., 1): ").strip()
+    timespan = input("Enter timespan (e.g., day, hour, minute): ").strip().lower()
+    from_date = input("Enter start date (YYYY-MM-DD): ").strip()
+    to_date = input("Enter end date (YYYY-MM-DD): ").strip()
 
-    ticker = "HIMS"
-    multiplier = "1"
-    timespan = "day"
-    from_date = "2025-01-01"
-    to_date = "2025-03-14"
+    # ticker = "HIMS"
+    # multiplier = "1"
+    # timespan = "day"
+    # from_date = "2025-01-01"
+    # to_date = "2025-03-14"
 
 
     ## Fetch stock data
@@ -88,6 +88,12 @@ if __name__ == "__main__":
 
     # Calculate next date
     next_date = last_date + pda.Timedelta(days=1)
+
+    # Skip weekends
+    if next_date.weekday() == 5:  # Saturday → Move to Monday
+        next_date += pda.Timedelta(days=2)
+    elif next_date.weekday() == 6:  # Sunday → Move to Monday
+        next_date += pda.Timedelta(days=1)
     
     # Append new row into df
     new_row = pda.DataFrame({
