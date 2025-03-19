@@ -8,6 +8,7 @@ import models
 import os 
 from dotenv import load_dotenv
 import visualisation as vi
+import data_storage as ds
 
 
 env_path = os.path.join(os.path.dirname(__file__), "..","stock_env", ".env")
@@ -26,17 +27,17 @@ if __name__ == "__main__":
         print(f"api key obtained {api_key}")
     
 
-    ticker = input("Enter stock ticker (e.g., AAPL): ").strip().upper()
-    multiplier = input("Enter multiplier (e.g., 1): ").strip()
-    timespan = input("Enter timespan (e.g., day, hour, minute): ").strip().lower()
-    from_date = input("Enter start date (YYYY-MM-DD): ").strip()
-    to_date = input("Enter end date (YYYY-MM-DD): ").strip()
+    # ticker = input("Enter stock ticker (e.g., AAPL): ").strip().upper()
+    # multiplier = input("Enter multiplier (e.g., 1): ").strip()
+    # timespan = input("Enter timespan (e.g., day, hour, minute): ").strip().lower()
+    # from_date = input("Enter start date (YYYY-MM-DD): ").strip()
+    # to_date = input("Enter end date (YYYY-MM-DD): ").strip()
 
-    # ticker = "HIMS"
-    # multiplier = "1"
-    # timespan = "day"
-    # from_date = "2025-01-01"
-    # to_date = "2025-03-14"
+    ticker = "HIMS"
+    multiplier = "1"
+    timespan = "day"
+    from_date = "2025-01-01"
+    to_date = "2025-03-18"
 
 
     ## Fetch stock data
@@ -70,12 +71,14 @@ if __name__ == "__main__":
     mse, predictions = models.evaluate_model(model, X_test, y_test)
     print(f"Model MSE: {mse:.2f}")
 
-    # Save prediction 
+    # Save prediction locally
     data.loc[X_test.index, 'Predicted Close'] = predictions ## Only save predictions of rows of X that are assigned as test data 
     filename = os.path.join(data_dir, f"{ticker}_{from_date}_to_{to_date}.csv")
     data[['t','c','Predicted Close']].to_csv(filename, index=False)
     print(f"Predictions{filename} saved")
 
+    # Save prediction to s3
+    ds.upload_to_s3(filename, s3_key=f"datasets/{ticker}_predictions.csv")
 
 
 ################################################################
@@ -105,7 +108,9 @@ if __name__ == "__main__":
         "c_Lag3": [lag_values["c_Lag3"]]
     })
     data = pda.concat([data, new_row], ignore_index=True)
-    print(data)
+    
+
+
 
 ###############
 
