@@ -37,7 +37,7 @@ if __name__ == "__main__":
     multiplier = "1"
     timespan = "day"
     from_date = "2025-01-01"
-    to_date = "2025-03-18"
+    to_date = "2025-03-12"
 
 
     ## Fetch stock data
@@ -49,8 +49,8 @@ if __name__ == "__main__":
 
     try:
         data = dc.fetch_stock_data(api_key, ticker, multiplier, timespan, from_date, to_date)
-        root_dir = os.path.join(os.path.dirname(__file__),"..")
-        data_dir = os.path.join(os.path.join(root_dir,"data"))
+        root_dir = os.path.join(os.path.dirname(__file__),"..") ## Navigate from current sub-directory(src) to root direction(STOCK_PREDICTION) by moving one step up
+        data_dir = os.path.join(os.path.join(root_dir,"data")) ## Navigate from src sub-directory to "data" directory
 
         if not os.path.exists("data_dir"):
             os.makedirs("data_dir")
@@ -73,7 +73,7 @@ if __name__ == "__main__":
 
     # Save prediction locally
     data.loc[X_test.index, 'Predicted Close'] = predictions ## Only save predictions of rows of X that are assigned as test data 
-    filename = os.path.join(data_dir, f"{ticker}_{from_date}_to_{to_date}.csv")
+    filename = os.path.join(data_dir, f"{ticker}_{from_date}_to_{to_date}.csv") ## Navigate from 
     data[['t','c','Predicted Close']].to_csv(filename, index=False)
     print(f"Predictions{filename} saved")
 

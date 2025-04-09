@@ -2,7 +2,7 @@ import boto3
 import os
 
 
-def upload_to_s3(file_name, bucket_name="mystocksprediction", s3_key="dataset/stock_price.csv"):
+def upload_to_s3(file_name, bucket_name="mystocksprediction", s3_key="datasets/stock_price.csv"):
     """
     Uploads a file to an AWS S3 bucket.
 
